@@ -59,3 +59,14 @@ Build docker image
 ```bash
 $ packer build config.json
 ```
+
+## TIPS
+### Use github/bitbucket access private key on vagrant
+[config.ssh.forward_agent](http://docs-v1.vagrantup.com/v1/docs/config/ssh/forward_agent.html)
+
+set up ssh-agent on host.
+```bash
+$ ssh-agent
+$ ssh-add ~/.ssh/id_rsa # github/bitbucket access key
+$ vagrant ssh
+```
