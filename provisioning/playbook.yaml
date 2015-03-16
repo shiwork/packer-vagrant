@@ -1,0 +1,36 @@
+- hosts: default
+  sudo: yes
+  user: vagrant
+  tasks:
+    - name: apt-get update
+      apt: pkg=docker.io update_cache=yes
+
+    - name: gpasswd -a
+      shell: sudo gpasswd -a ${USER} docker
+      sudo: no
+
+    - name: restart docker
+      service: name=docker.io state=restarted
+
+    # - name: newgrp docker
+    #   shell: command newgrp docker
+    #   sudo: no
+
+    - name: install unzip
+      apt: name=unzip
+
+    - name: get packer
+      shell: mkdir -p ~/packer && cd ~/packer && wget https://dl.bintray.com/mitchellh/packer/packer_0.7.5_linux_amd64.zip
+      sudo: no
+
+    - name: download check
+      shell: cd ~/packer && [ -e packer_0.7.5_linux_amd64.zip ]
+      sudo: no
+
+    - name: unzip packer
+      shell: cd ~/packer && unzip packer_0.7.5_linux_amd64.zip
+      sudo: no
+
+    - name: export path
+      shell: echo "export PATH=$PATH:~/packer" >> ~/.bashrc
+      sudo: no
